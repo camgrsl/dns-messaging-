@@ -1,0 +1,13 @@
+name: docker-compose-build-and-test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: use ci env
+        run: cp -f .env.ci .env
+      - name: Docker compose up
+        run: docker-compose up -d
+      - name: Test communication
+        run: make test-connection

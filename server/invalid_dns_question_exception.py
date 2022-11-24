@@ -1,0 +1,2 @@
+class InvalidDnsQuestionException(Exception):
+  pass

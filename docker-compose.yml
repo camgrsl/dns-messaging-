@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  server:
+    build: ./server
+    networks:
+      gouach:
+    ports:
+      - "${DNS_SERVER_PORT}:${DNS_SERVER_PORT}"
+    env_file:
+      - .env
+  client:
+    build: ./client
+    container_name: client
+    networks:
+      gouach:
+    env_file:
+      - .env
+  redis:
+    image: redis:7.0.5-alpine
+    networks:
+      gouach:
+  api:
+    build: ./api
+    ports:
+      - "3000:3000"
+    networks:
+      gouach:
+    env_file:
+      - .env
+  web-app:
+    build: ./web-app
+    ports:
+      - "3001:3001"
+    networks:
+      gouach:
+    env_file:
+      - .env
+networks:
+  gouach:
+    driver: bridge
