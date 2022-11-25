@@ -22,10 +22,11 @@ class GouachDNSResolver(BaseResolver):
       decoded_payload = decode(payload)
       debug("Battery %s authenticating with payload %s" % (battery_id, payload))
       debug("Decoded payload %s" % (decoded_payload))
-      if self.redis_repository.persist(battery_id, decoded_payload):
-        debug("Succesfully persisted payload to redis")
     except Exception:
       debug("Invalid DNS Question")
       raise InvalidDnsQuestionException('Invalid DNS Question')
+    
+    if self.redis_repository.persist(battery_id, decoded_payload):
+      debug("Succesfully persisted payload to redis")
     
     return reply
